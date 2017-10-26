@@ -20,7 +20,7 @@ path = "/home/amrit/catkin/src/walk/scripts/data.xml"
 abc =True
 y,u,v = 0,142,56
 
-cap = cv2.VideoCapture(3)
+cap = cv2.VideoCapture(1)
 
 def sniper():
 
@@ -204,13 +204,13 @@ class Motion(object) :
 		print x1,y1
 		print x1,y1
 		if x1>320:
-			u = -2
+			u = -1
 		else:
-			u = +2
+			u = +1
 		if y1<240:
-			v=+2
+			v=+1
 		else:
-			v=-2
+			v=-1
 		while x1<315  or x1>325:
 			pan = list(x.returnPos(19))[0]
 			pan+=u
@@ -247,15 +247,15 @@ class Motion(object) :
 			print pos
 
 		elif head < 0 :
-			write = [tilt-10,40-head,-25]
+			write = [tilt,-51-head,-25]
 			pos = dict(zip(self.fire_right,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
-			x.angleWrite(6,-30)
+			x.angleWrite(5,-30)
 			time.sleep(3)
-			x.angleWrite(2,0)
+			x.angleWrite(1,0)
 			time.sleep(0.01)
-			x.angleWrite(4,0.92)
+			x.angleWrite(5,0.92)
 			print pos
 
 						
