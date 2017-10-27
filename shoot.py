@@ -231,7 +231,7 @@ class Motion(object) :
 		head = list(x.returnPos(19))[0]
 		tilt = list(x.returnPos(20))[0]
 		if head > 0 :
-			write=[-90,40-head,-25]
+			write=[-30-tilt,40-head,-25]
 			pos=dict(zip(self.fire_left,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
@@ -247,7 +247,7 @@ class Motion(object) :
 			print pos
 
 		elif head < 0 :
-			write = [tilt,-51-head,-25]
+			write = [-30-tilt,-51-head,-25]
 			pos = dict(zip(self.fire_right,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
