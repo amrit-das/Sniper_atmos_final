@@ -20,7 +20,7 @@ path = "/home/amrit/catkin/src/walk/scripts/data.xml"
 abc =True
 y,u,v = 0,142,56
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(4)
 
 def sniper():
 
@@ -204,13 +204,13 @@ class Motion(object) :
 		print x1,y1
 		print x1,y1
 		if x1>320:
-			u = -1
+			u = -2
 		else:
-			u = +1
+			u = +2
 		if y1<240:
-			v=+1
+			v=+2
 		else:
-			v=-1
+			v=-2
 		while x1<315  or x1>325:
 			pan = list(x.returnPos(19))[0]
 			pan+=u
@@ -230,15 +230,17 @@ class Motion(object) :
 		print "Shooting"
 		head = list(x.returnPos(19))[0]
 		tilt = list(x.returnPos(20))[0]
+		head_rad = head*pi/180
 		if head > 0 :
-			write=[-30-tilt,40-head,-25]
+			theta = atan((1*sin(head_rad)-0.1)/(1*cos(head_rad)))
+			write=[-30-tilt,45-(degrees(theta)),-15]
 			pos=dict(zip(self.fire_left,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
 			x.angleWrite(6,-48)
 			time.sleep(2)
-			x.angleWrite(6,-25)
-			time.sleep(0.1)
+			x.angleWrite(6,-15)
+			time.sleep(1)
 			x.angleWrite(2,0)
 			time.sleep(0.1)
 			x.angleWrite(4,0.92)
@@ -247,17 +249,21 @@ class Motion(object) :
 			print pos
 
 		elif head < 0 :
-			write = [-30-tilt,-51-head,-25]
+			theta = atan((1*sin(head_rad)-0.1)/(1*cos(head_rad)))
+			write = [30+tilt,-45-(degrees(theta)),-15]
 			pos = dict(zip(self.fire_right,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
-			x.angleWrite(5,-30)
-			time.sleep(3)
+			x.angleWrite(5,-48)
+			time.sleep(2)
+			x.angleWrite(5,-15)
+			time.sleep(1)
 			x.angleWrite(1,0)
+			time.sleep(0.1)
+			x.angleWrite(3,0.92)
 			time.sleep(0.01)
-			x.angleWrite(5,0.92)
+			x.angleWrite(5,-48)
 			print pos
-
 						
 
 def walk() :
@@ -288,7 +294,7 @@ if __name__=="__main__" :
 	#detected = False
 
 	while True :
-		
+		x.angleWrite(20,m_20)
 		for pose in range(-90,90,1) :
 			x.angleWrite(19,pose)
 			
@@ -318,6 +324,8 @@ if __name__=="__main__" :
 
 		if flag == 1:
 			break
+
+		m_20 = m_20-10
 		
 	m = Motion()
 	m.center(sniper_val)
