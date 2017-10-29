@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 import cv2
 import numpy as np
 from math import pi,atan,sin,cos,degrees
+import rospy
 #import rospy
 #from std_msgs.msg import String
 flag = 0
@@ -18,9 +19,9 @@ hand = {5: 60, 6: -60}
 
 path = "/home/amrit/catkin/src/walk/scripts/data.xml"
 abc =True
-y,u,v = 0,88,93
+y,u,v = 0,142,56
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(4)
 
 def sniper():
 
@@ -186,7 +187,7 @@ class Walk(object) :
 		for pose in zip(*write) :
 			print "in"
 			x.setPos(dict(zip(ids,pose)))
-			time.sleep(0.0017)
+			time.sleep(0.01)
 
 class Motion(object) :
 	def __init__(self) : 
@@ -287,13 +288,14 @@ if __name__=="__main__" :
 	x.angleWrite(20,m_20)
 	balance = xml.parse("152 Balance")
 	raw_input("Proceed?")
+	
 
 	
 	#walk()
 	#ghost_final = sniper()
 	#detected = False
 
-	while True :
+	'''while True :
 		x.angleWrite(20,m_20)
 		for pose in range(-90,90,1) :
 			x.angleWrite(19,pose)
@@ -330,5 +332,19 @@ if __name__=="__main__" :
 	m = Motion()
 	m.center(sniper_val)
 	print "Now shoot"
-	m.shoot()
+	m.shoot()'''
+
+	#balance = xml.parse("23 Defence")
+	balance = xml.parse("1 Bow")
+	#time.sleep(1)
+	
+	'''
+	balance = xml.parse("8 Push up")
+	time.sleep(.8)
+	balance = xml.parse("9 ")
+	time.sleep(.8)
+	balance = xml.parse("10 ")'''
+
+
+
 			

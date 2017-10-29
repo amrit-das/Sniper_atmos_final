@@ -7,7 +7,7 @@ import numpy as np
 import xml.etree.ElementTree as ET
 import cv2
 import numpy as np
-from math import pi,atan,sin,cos,degrees
+from math import pi,atan,sin,cos,degrees,tan
 #import rospy
 #from std_msgs.msg import String
 flag = 0
@@ -18,9 +18,9 @@ hand = {5: 60, 6: -60}
 
 path = "/home/amrit/catkin/src/walk/scripts/data.xml"
 abc =True
-y,u,v = 0,88,93
+y,u,v = 0,142,67
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(2)
 
 def sniper():
 
@@ -233,7 +233,9 @@ class Motion(object) :
 		head_rad = head*pi/180
 		if head > 0 :
 			theta = atan((1*sin(head_rad)-0.1)/(1*cos(head_rad)))
-			write=[-30-tilt,45-(degrees(theta)),-15]
+			alpha=(tilt-90)*pi/180
+			phi=atan( (0.09/1+1*tan(alpha))  )
+			write=[-(90+degrees(phi)),45-(degrees(theta)),-15]
 			pos=dict(zip(self.fire_left,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
@@ -250,7 +252,9 @@ class Motion(object) :
 
 		elif head < 0 :
 			theta = atan((1*sin(head_rad)-0.1)/(1*cos(head_rad)))
-			write = [30+tilt,-45-(degrees(theta)),-15]
+			alpha=(tilt-90)*pi/180
+			phi=atan( (0.09/1+1*tan(alpha))  )
+			write = [(90+degrees(phi)),-45-(degrees(theta)),-15]
 			pos = dict(zip(self.fire_right,write))
 			x.dictWrite(pos)
 			time.sleep(0.1)
@@ -282,7 +286,7 @@ def walk() :
 		time.sleep(0.01)
 
 if __name__=="__main__" :
-	m_20 = 90
+	m_20 = 100
 	x.angleWrite(19,0)
 	x.angleWrite(20,m_20)
 	balance = xml.parse("152 Balance")
@@ -295,7 +299,7 @@ if __name__=="__main__" :
 
 	while True :
 		x.angleWrite(20,m_20)
-		for pose in range(-90,90,1) :
+		for pose in range(90,-90,-1) :
 			x.angleWrite(19,pose)
 			
 			time.sleep(0.01)
@@ -309,7 +313,7 @@ if __name__=="__main__" :
 		if flag == 1:
 			break
 		
-		for pose in range(90,-90,-1) :
+		for pose in range(-90,90,1) :
 			x.angleWrite(19,pose)
 			time.sleep(0.01)
 			sniper_val = sniper()
@@ -332,3 +336,4 @@ if __name__=="__main__" :
 	print "Now shoot"
 	m.shoot()
 			
+

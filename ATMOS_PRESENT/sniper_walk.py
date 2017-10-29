@@ -8,8 +8,8 @@ import xml.etree.ElementTree as ET
 import cv2
 import numpy as np
 from math import pi,atan,sin,cos,degrees
-#import rospy
-#from std_msgs.msg import String
+import rospy
+from std_msgs.msg import String
 flag = 0
 #ang=(91.38, 87.34, 6.81, -47.16, 79.87, -80.31, -94.9, 124.18, -0.31, -2.68, 11.47, -12.7, -15.78, 14.55, -8.48, 3.91, -0.13, -4.26, 46.99)
 darwin = {1: 90, 2: -90, 3: 67.5, 4: -67.5, 7: 45, 8: -45, 9: 'i', 10: 'i', 13: 'i', 14: 'i', 17: 'i', 18: 'i'}
@@ -289,8 +289,8 @@ if __name__=="__main__" :
 	raw_input("Proceed?")
 
 	
-	#walk()
-	#ghost_final = sniper()
+	walk()
+	'''#ghost_final = sniper()
 	#detected = False
 
 	while True :
@@ -330,5 +330,5 @@ if __name__=="__main__" :
 	m = Motion()
 	m.center(sniper_val)
 	print "Now shoot"
-	m.shoot()
+	m.shoot()'''
 			
